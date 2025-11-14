@@ -5,7 +5,6 @@ import { Presentation } from './types';
 import FileUpload from './components/FileUpload';
 import PresentationView from './components/PresentationView';
 import Loader from './components/Loader';
-import ApiKeyManager from './components/ApiKeyManager';
 import { LogoIcon, GithubIcon } from './components/Icons';
 
 // pdf.js and Tesseract are loaded from CDN, declare them to TypeScript
@@ -13,16 +12,10 @@ declare const pdfjsLib: any;
 declare const Tesseract: any;
 
 const App: React.FC = () => {
-  const [apiKey, setApiKey] = useState<string | null>(() => sessionStorage.getItem('gemini-api-key'));
   const [presentation, setPresentation] = useState<Presentation | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-
-  const handleKeySubmit = (key: string) => {
-    sessionStorage.setItem('gemini-api-key', key);
-    setApiKey(key);
-  };
 
   const handleGenerate = useCallback(async (file: File) => {
     if (!file) {
@@ -93,10 +86,6 @@ const App: React.FC = () => {
       setLoadingMessage('');
     }
   }, []);
-
-  if (!apiKey) {
-    return <ApiKeyManager onKeySubmit={handleKeySubmit} />;
-  }
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-200 flex flex-col items-center p-4 sm:p-6 md:p-8">
