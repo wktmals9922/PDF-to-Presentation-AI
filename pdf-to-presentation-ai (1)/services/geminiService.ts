@@ -3,11 +3,11 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Presentation } from '../types';
 
 function getAiClient(): GoogleGenAI {
-    const apiKey = sessionStorage.getItem('gemini-api-key');
-    if (!apiKey) {
-        throw new Error("Gemini API key not found in session storage. Please set it in the application.");
+    // The API key is injected from the environment and assumed to be available.
+    if (!process.env.API_KEY) {
+        throw new Error("API key is not available. Please ensure it is configured in the environment.");
     }
-    return new GoogleGenAI({ apiKey });
+    return new GoogleGenAI({ apiKey: process.env.API_KEY });
 }
 
 const presentationSchema = {
