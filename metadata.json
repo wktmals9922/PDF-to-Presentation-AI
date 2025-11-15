@@ -1,5 +1,0 @@
-
-{
-  "name": "PDF to Presentation AI",
-  "description": "An application that uses OCR to extract text from a PDF file and then leverages the Gemini API to automatically generate a structured presentation from the content."
-}
